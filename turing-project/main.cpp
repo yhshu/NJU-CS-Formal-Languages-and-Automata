@@ -6,19 +6,17 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "TuringMachine.h"
+#include "utils.h"
 
 using namespace std;
 
 bool verbose = false;
 
-void help() {
-  cout << "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
-}
-
 int main(int argc, char *argv[]) {
   int arg_num = 0;
 
-  for (int i = 1; i <= argc; i++) {
+  for (int i = 1; i < argc; i++) {
     string arg = argv[i];
     if (arg == "-v" or arg == "--verbose") {
       verbose = true;
@@ -28,15 +26,29 @@ int main(int argc, char *argv[]) {
       arg_num++;
   }
 
-  if (arg_num < 3) {
-    cerr << "the number of arguments is illegal";
+  if (arg_num < 2) {
+    cerr << "error: the number of arguments is illegal";
     return 0;
   }
 
   ifstream tm_file;
-  string tm_filepath = argv[argc - 1];
-  tm_file.open(tm_filepath);
-  string input = argv[argc];
+  tm_file.open(argv[argc - 2]);
+  string input = argv[argc - 1];
+  if (!tm_file) {
+    cerr << "error: the TM program path is not correct";
+  }
+
+  string line;
+  vector<string> tm_str;
+  while (tm_file >> line) {
+    tm_str.push_back(line);
+  }
+  bool build_success;
+  TuringMachine turing_machine(tm_str, build_success);
+  if (!build_success) {
+    syntaxError();
+    return 0;
+  }
 
   return 0;
 }

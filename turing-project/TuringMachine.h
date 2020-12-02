@@ -7,6 +7,7 @@
 
 #include <set>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -21,11 +22,15 @@ class TuringMachine {
   int num_tape;
 
  public:
-  TuringMachine(const string &tm);
+  TuringMachine(const vector<string> &tm_str, bool &res);
 
-  void buildStateSet(const string &line);
+  bool buildStateSet(const string &line);
 
-  void buildInputSymbolsSet(const string &line);
+  bool buildInputSymbolsSet(const string &line);
+
+  bool buildTapeSymbolsSet(const string &line);
+  bool checkDefinition();
+  void buildFinalStateSet(string line);
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_
