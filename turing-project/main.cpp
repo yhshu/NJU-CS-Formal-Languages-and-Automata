@@ -22,13 +22,14 @@ int main(int argc, char *argv[]) {
       verbose = true;
     } else if (arg == "-h" or arg == "--help") {
       help();
-    } else
+    } else {
       arg_num++;
+    }
   }
 
   if (arg_num < 2) {
     cerr << "error: the number of arguments is illegal";
-    return 0;
+    exit(1);
   }
 
   ifstream tm_file;
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]) {
   string input = argv[argc - 1];
   if (!tm_file) {
     cerr << "error: the TM program path is not correct";
+    exit(1);
   }
 
   string line;
@@ -44,10 +46,9 @@ int main(int argc, char *argv[]) {
     tm_str.push_back(line);
   }
   bool build_success;
-  TuringMachine turing_machine(tm_str, build_success);
+  TuringMachine turing_machine(tm_str);
   if (!build_success) {
     syntaxError();
-    return 0;
   }
 
   return 0;

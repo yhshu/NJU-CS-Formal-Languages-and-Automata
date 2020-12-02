@@ -8,6 +8,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include "TransitionFunction.h"
 
 using namespace std;
 
@@ -19,18 +20,23 @@ class TuringMachine {
   string init_state_;
   char blank_symbol_;
   set<string> final_state_set_;
+  set<TransitionFunction> transition_functions_;
   int num_tape;
 
  public:
-  TuringMachine(const vector<string> &tm_str, bool &res);
+  TuringMachine(const vector<string> &tm_str);
 
-  bool buildStateSet(const string &line);
+  void buildStateSet(const string &line);
 
-  bool buildInputSymbolsSet(const string &line);
+  void buildInputSymbolsSet(const string &line);
 
-  bool buildTapeSymbolsSet(const string &line);
-  bool checkDefinition();
+  void buildTapeSymbolsSet(const string &line);
+
+  void checkDefinition();
+
   void buildFinalStateSet(string line);
+
+  bool checkTransitionFuncDefinition(const vector<string> &transition_func_vec);
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_

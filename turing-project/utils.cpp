@@ -17,6 +17,7 @@ void help() {
 }
 void syntaxError() {
   cerr << "syntax error";
+  exit(1);
 }
 vector<string> split(const string &str, const string &delim) {
   vector<string> res;

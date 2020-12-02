@@ -6,6 +6,7 @@
 #define TURING_MACHINE_TURING_PROJECT_TRANSITIONFUNCTION_H_
 
 #include <string>
+#include <utility>
 #include <vector>
 
 using namespace std;
@@ -22,11 +23,11 @@ class TransitionFunction {
 
  public:
   TransitionFunction(string input_state,
-                     string input_symbols,
-                     string output_symbols,
-                     string directions,
+                     const string &input_symbols,
+                     const string &output_symbols,
+                     const string &directions,
                      string output_state, int num_tape)
-      : input_state_(input_state), output_state_(output_state), num_tape_(num_tape) {
+      : input_state_(std::move(input_state)), output_state_(std::move(output_state)), num_tape_(num_tape) {
     for (const char &ch : input_symbols) {
       input_symbols_.emplace_back(ch);
     }
