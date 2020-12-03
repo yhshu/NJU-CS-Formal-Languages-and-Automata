@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     if (arg == "-v" or arg == "--verbose") {
       verbose = true;
     } else if (arg == "-h" or arg == "--help") {
-      help();
+      Help();
     } else {
       arg_num++;
     }
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
   bool build_success;
   TuringMachine turing_machine(tm_str);
   if (!build_success) {
-    syntaxError();
+    SyntaxError();
   }
 
   return 0;

@@ -4,7 +4,7 @@
 
 #include "utils.h"
 
-string trim(const string &str) {
+string Trim(const string &str) {
   if (str.empty())
     return str;
   string res = str;
@@ -12,14 +12,14 @@ string trim(const string &str) {
   res.erase(res.find_last_not_of(' ') + 1);
   return res;
 }
-void help() {
+void Help() {
   cout << "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
 }
-void syntaxError() {
+void SyntaxError() {
   cerr << "syntax error";
   exit(1);
 }
-vector<string> split(const string &str, const string &delim) {
+vector<string> Split(const string &str, const string &delim) {
   vector<string> res;
   string::size_type lastPos = str.find_first_not_of(delim, 0);
   string::size_type pos = str.find_first_of(delim, lastPos);

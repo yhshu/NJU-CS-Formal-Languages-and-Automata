@@ -10,9 +10,9 @@
 
 using namespace std;
 
-void syntaxError();
-void help();
-string trim(const string &str);
-vector<string> split(const string &str, const string &delim);
+void SyntaxError();
+void Help();
+string Trim(const string &str);
+vector<string> Split(const string &str, const string &delim);
 
 #endif //TURING_MACHINE_TURING_PROJECT_UTILS_H_
