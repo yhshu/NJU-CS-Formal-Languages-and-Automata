@@ -1,0 +1,20 @@
+//
+// Created by Yiheng Shu on 2020/12/3.
+//
+
+#ifndef TURING_MACHINE_TURING_PROJECT_MESSAGE_H_
+#define TURING_MACHINE_TURING_PROJECT_MESSAGE_H_
+
+#include <iostream>
+
+using namespace std;
+
+void printERR();
+
+void printEND();
+
+void printRUN();
+
+void printDivider();
+
+#endif //TURING_MACHINE_TURING_PROJECT_MESSAGE_H_

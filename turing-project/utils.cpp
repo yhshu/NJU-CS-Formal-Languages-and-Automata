@@ -3,6 +3,7 @@
 //
 
 #include "utils.h"
+#include "message.h"
 
 string Trim(const string &str) {
   if (str.empty())
@@ -15,8 +16,17 @@ string Trim(const string &str) {
 void Help() {
   cout << "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
 }
-void SyntaxError() {
-  cerr << "syntax error";
+void SyntaxError(const string &error, const string &input, int error_pos) {
+  printERR();
+  cerr << "error: " << error << endl;
+  if (not input.empty())
+    cerr << "Input: " << input << endl;
+  if (not input.empty() and error_pos >= 0 and error_pos < input.size()) {
+    cerr << "       ";
+    for (int i = 0; i < error_pos; i++) { cerr << " "; }
+    cerr << "^" << endl;
+  }
+  printEND();
   exit(1);
 }
 vector<string> Split(const string &str, const string &delim) {

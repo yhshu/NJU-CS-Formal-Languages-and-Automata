@@ -2,7 +2,6 @@
 // Created by Yiheng Shu on 2020/12/2.
 //
 
-#include <cstring>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -45,11 +44,7 @@ int main(int argc, char *argv[]) {
   while (tm_file >> line) {
     tm_str.push_back(line);
   }
-  bool build_success;
   TuringMachine turing_machine(tm_str);
-  if (!build_success) {
-    SyntaxError();
-  }
 
   return 0;
 }
