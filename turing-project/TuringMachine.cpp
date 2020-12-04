@@ -21,13 +21,13 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
     if (line.find("#Q = ") == 0) {         // 1. state set
       BuildStateSet(line);
     } else if (line.find("#S = ") == 0) {  // 2. input symbol set
-      BuildInputSymbolsSet(line.substr(6));
+      BuildInputSymbolsSet(line);
     } else if (line.find("#G = ") == 0) {  // 3. tape symbol set
       BuildTapeSymbolsSet(line);
     } else if (line.find("#q0 = ") == 0) { // 4. init_state
       this->init_state_ = line.substr(6, line.size());
     } else if (line.find("#B = ") == 0) {  // 5. blank symbol
-      string blank_symbol = line.substr(6, line.size());
+      string blank_symbol = line.substr(5, line.size() - 5);
       if (blank_symbol.size() != 1) {
         SyntaxError("the blank symbol is not a character", blank_symbol, line.find_first_of(blank_symbol));
       }
@@ -35,7 +35,7 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
     } else if (line.find("#F = ") == 0) {  // 6. final state set
       BuildFinalStateSet(line);
     } else if (line.find("#N = ") == 0) {  // 7. the tape number
-      this->num_tape_ = stoi(line.substr(6, line.size()));
+      this->num_tape_ = stoi(line.substr(5, line.size() - 5));
     } else {                                  // 8. transition functions
       auto trans_func_vec = Split(line, " ");
       if (trans_func_vec.size() != 5) {
@@ -67,7 +67,7 @@ void TuringMachine::BuildStateSet(const string &line) {
                 line,
                 line.size() - 1);
 
-  auto state_vec = Split(line.substr(6, line.size() - 1), ",");
+  auto state_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &state: state_vec) {
     this->state_set_.insert(state);
   }
@@ -83,7 +83,7 @@ void TuringMachine::BuildInputSymbolsSet(const string &line) {
                 line,
                 line.size() - 1);
 
-  auto input_symbols_vec = Split(line.substr(6, line.size() - 1), ",");
+  auto input_symbols_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &input_symbol: input_symbols_vec) {
     if (input_symbol.size() != 1 or input_symbol[0] == ';' or input_symbol[0] == '*' or input_symbol[0] == '_')
       SyntaxError("illegal statements, the input symbol should be a character", line, line.find_first_of(input_symbol));
@@ -101,7 +101,7 @@ void TuringMachine::BuildTapeSymbolsSet(const string &line) {
                 line,
                 line.size() - 1);
 
-  auto tape_symbols_vec = Split(line.substr(6, line.size() - 1), ",");
+  auto tape_symbols_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &tape_symbol: tape_symbols_vec) {
     if (tape_symbol.size() != 1 or tape_symbol[0] == ';' or tape_symbol[0] == '*')
       SyntaxError("illegal statements, the tape symbol should be a character", line, line.find_first_of(tape_symbol));
@@ -119,7 +119,7 @@ void TuringMachine::BuildFinalStateSet(const string &line) {
                 line,
                 line.size() - 1);
 
-  auto final_states_vec = Split(line.substr(6, line.size() - 1), ",");
+  auto final_states_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &final_state: final_states_vec) {
     this->final_state_set_.insert(final_state);
   }
@@ -163,7 +163,7 @@ bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transiti
   }
 
   for (const char &ch : transition_func_vec.at(3)) {
-    if (ch != 'r' and ch != 'l')
+    if (ch != 'r' and ch != 'l' and ch != '*')
       return false;
   }
 

@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
   string line;
   vector<string> tm_str;
-  while (tm_file >> line) {
+  while (getline(tm_file, line)) {
     tm_str.push_back(line);
   }
   TuringMachine turing_machine(tm_str);
