@@ -3,6 +3,7 @@
 //
 
 #include "Tape.h"
+#include "utils.h"
 
 #include <sstream>
 
@@ -23,38 +24,42 @@ Tape::Tape(int id, const string &input, char blank) {
   }
 }
 
-string Tape::to_string() {
+string Tape::to_string(int num_tape) {
   cleanBothEnds(); // clean the blank symbols at both ends
 
   stringstream index_ss;
   stringstream tape_ss;
   stringstream head_ss;
+  map<long long, int> pos_map;
 
-  // key set
-  index_ss << "Index" << id_ << " :";
+  // index
+  index_ss << "Index" << id_ << Space(NumLen(num_tape - 1) - NumLen(id_)) << " :";
   int head_pos = 0;
-  int cnt = 0;
+  int pos = 0;
   for (auto &it : tape_) {
-    index_ss << " " << it.first;
-    if (it.first == head_)
-      head_pos = cnt;
-    cnt++;
+    auto index = abs(it.first);
+    index_ss << " " << index;
+    pos_map.insert(make_pair(index, pos));
+    if (it.first == head_) {
+      head_pos = pos;
+    }
+    pos += (NumLen(index) + 1);
   }
 
-  // value set
-  tape_ss << "Tape" << id_ << "  :";
-  for (auto &it: tape_) {
-    tape_ss << " " << it.second;
+  // tape symbol
+  tape_ss << "Tape" << id_ << Space(NumLen(num_tape - 1) - NumLen(id_)) << "  : ";
+  vector<char> tape_str(pos_map.rbegin()->second + 1, ' ');
+  for (auto &it : pos_map) {
+    tape_str.at(it.second) = tape_.at(it.first);
+  }
+  for (auto &ch : tape_str) {
+    tape_ss << ch;
   }
 
   // head
-  head_ss << "Head" << id_ << "  : ";
-  for (int i = 0; i < head_pos; i++) {
-    head_ss << "  ";
-  }
-  head_ss << "^" << endl;
+  head_ss << "Head" << id_ << Space(NumLen(num_tape - 1) - NumLen(id_)) << "  : " << Space(head_pos) << "^";
 
-  return index_ss.str() + "\n" + tape_ss.str() + "\n" + head_ss.str();
+  return index_ss.str() + "\n" + tape_ss.str() + "\n" + head_ss.str() + "\n";
 }
 
 void Tape::cleanBothEnds() {

@@ -21,7 +21,7 @@ class Tape {
 
   Tape(int id, char blank);
 
-  string to_string();
+  string to_string(int num_tape);
   void cleanBothEnds();
 };
 

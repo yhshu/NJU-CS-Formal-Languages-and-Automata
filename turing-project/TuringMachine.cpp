@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "TuringMachine.h"
 #include "utils.h"
 #include "TransitionFunction.h"
@@ -175,14 +176,6 @@ bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transiti
   return true;
 }
 
-void TuringMachine::run(const string &input) {
-  CheckInputSymbols(input);
-  tapes.emplace_back(0, input, blank_symbol_);
-  for (int i = 1; i < num_tape_; i++) {
-    tapes.emplace_back(Tape(i, blank_symbol_));
-  }
-}
-
 void TuringMachine::CheckInputSymbols(const string &input) {
   for (int i = 0; i < input.size(); i++) {
     if (input_symbols_set_.find(input[i]) == input_symbols_set_.end()) {
@@ -192,4 +185,37 @@ void TuringMachine::CheckInputSymbols(const string &input) {
   // now the input is legal
   cerr << "Input: " << input << endl;
   printRUN();
+}
+
+void TuringMachine::InitTapes(const string &input) {
+  tapes.emplace_back(0, input, blank_symbol_);
+  for (int i = 1; i < num_tape_; i++) {
+    tapes.emplace_back(Tape(i, blank_symbol_));
+  }
+}
+
+string TuringMachine::getCurString() {
+  stringstream ss;
+  ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_;
+  for (Tape &tape : tapes) {
+    ss << tape.to_string(0);
+  }
+  ss << "State" << Space(NumLen(num_tape_ - 1)) << " : " << cur_state_;
+  ss << "---------------------------------------------" << endl;
+  return ss.str();
+}
+
+void TuringMachine::run(const string &input) {
+  CheckInputSymbols(input);
+  InitTapes(input);
+  while (final_state_set_.find(cur_state_) == final_state_set_.end()) {
+    if (verbose) {
+      cout << getCurString();
+      Step();
+    }
+  }
+}
+
+void TuringMachine::Step() {
+
 }

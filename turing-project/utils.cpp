@@ -4,6 +4,7 @@
 
 #include "utils.h"
 #include "message.h"
+#include <sstream>
 
 string Trim(const string &str) {
   if (str.empty())
@@ -67,4 +68,18 @@ vector<string> Split(const string &str, const string &delim) {
     pos = str.find_first_of(delim, lastPos);
   }
   return res;
+}
+
+int NumLen(long long int num) {
+  stringstream ss;
+  ss << num;
+  return ss.str().size();
+}
+
+string Space(int num_space) {
+  stringstream ss;
+  for (int i = 0; i < num_space; i++) {
+    ss << " ";
+  }
+  return ss.str();
 }

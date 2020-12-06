@@ -17,5 +17,7 @@ void IllegalInput(const string &input, int error_pos);
 void Help();
 string Trim(const string &str);
 vector<string> Split(const string &str, const string &delim);
+int NumLen(long long int num);
+string Space(int num_space);
 
 #endif //TURING_MACHINE_TURING_PROJECT_UTILS_H_

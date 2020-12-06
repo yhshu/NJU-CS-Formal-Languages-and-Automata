@@ -26,6 +26,7 @@ class TuringMachine {
 
   vector<Tape> tapes;
   string cur_state_;
+  int cur_step_;
 
  public:
 
@@ -54,6 +55,11 @@ class TuringMachine {
   void run(const string &input);
 
   void CheckInputSymbols(const string &input);
+
+  void InitTapes(const string &input);
+
+  string getCurString();
+  void Step();
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_
