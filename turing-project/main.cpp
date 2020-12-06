@@ -10,15 +10,12 @@
 
 using namespace std;
 
-bool verbose = false;
-
 int main(int argc, char *argv[]) {
   int arg_num = 0;
 
   for (int i = 1; i < argc; i++) {
     string arg = argv[i];
     if (arg == "-v" or arg == "--verbose") {
-      verbose = true;
     } else if (arg == "-h" or arg == "--help") {
       Help();
     } else {
@@ -45,6 +42,6 @@ int main(int argc, char *argv[]) {
     tm_str.push_back(line);
   }
   TuringMachine turing_machine(tm_str);
-
+  turing_machine.run(input);
   return 0;
 }

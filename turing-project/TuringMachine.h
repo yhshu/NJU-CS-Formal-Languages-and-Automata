@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "TransitionFunction.h"
+#include "Tape.h"
 
 using namespace std;
 
@@ -23,7 +24,15 @@ class TuringMachine {
   unordered_set<TransitionFunction, TransitionFunction::Hash> transition_functions_;
   int num_tape_;
 
+  vector<Tape> tapes;
+  string cur_state_;
+
  public:
+
+  /**
+   * Constructor
+   * @param tm_str a string for TM definition
+   */
   explicit TuringMachine(const vector<string> &tm_str);
 
   void BuildStateSet(const string &line);
@@ -37,6 +46,14 @@ class TuringMachine {
   void BuildFinalStateSet(const string &line);
 
   bool CheckTransitionFuncDefinition(const vector<string> &transition_func_vec);
+
+  /**
+   * Run the Turing Machine
+   * @param input the input string
+   */
+  void run(const string &input);
+
+  void CheckInputSymbols(const string &input);
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_

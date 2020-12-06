@@ -10,7 +10,10 @@
 
 using namespace std;
 
-void SyntaxError(const string& error, const string& input, int error_pos);
+static bool verbose = false;
+
+void SyntaxError(const string &error, const string &sentence, int error_pos);
+void IllegalInput(const string &input, int error_pos);
 void Help();
 string Trim(const string &str);
 vector<string> Split(const string &str, const string &delim);

@@ -6,6 +6,7 @@
 #include "TuringMachine.h"
 #include "utils.h"
 #include "TransitionFunction.h"
+#include "message.h"
 
 TuringMachine::TuringMachine(const vector<string> &tm_str) {
   for (string line: tm_str) {
@@ -15,7 +16,7 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
     if (line.empty())  // empty line or comment
       continue;
     if (line.size() <= 5) {
-      SyntaxError("illegal statement", line, -1);
+      SyntaxError("illegal statement, the sentence may be incomplete", line, -1);
     }
 
     if (line.find("#Q = ") == 0) {         // 1. state set
@@ -55,6 +56,7 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
   }
 
   CheckDefinition(); // check the TM definition
+  cur_state_ = init_state_;
 }
 
 void TuringMachine::BuildStateSet(const string &line) {
@@ -171,4 +173,23 @@ bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transiti
     return false;
 
   return true;
+}
+
+void TuringMachine::run(const string &input) {
+  CheckInputSymbols(input);
+  tapes.emplace_back(0, input, blank_symbol_);
+  for (int i = 1; i < num_tape_; i++) {
+    tapes.emplace_back(Tape(i, blank_symbol_));
+  }
+}
+
+void TuringMachine::CheckInputSymbols(const string &input) {
+  for (int i = 0; i < input.size(); i++) {
+    if (input_symbols_set_.find(input[i]) == input_symbols_set_.end()) {
+      IllegalInput(input, i);
+    }
+  }
+  // now the input is legal
+  cerr << "Input: " << input << endl;
+  printRUN();
 }
