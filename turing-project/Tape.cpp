@@ -25,7 +25,7 @@ Tape::Tape(int id, const string &input, char blank) {
 }
 
 string Tape::to_string(int num_tape) {
-  cleanBothEnds(); // clean the blank symbols at both ends
+  CleanBothEnds(); // clean the blank symbols at both ends
 
   stringstream index_ss;
   stringstream tape_ss;
@@ -62,7 +62,7 @@ string Tape::to_string(int num_tape) {
   return index_ss.str() + "\n" + tape_ss.str() + "\n" + head_ss.str() + "\n";
 }
 
-void Tape::cleanBothEnds() {
+void Tape::CleanBothEnds() {
   // the left end
   for (auto it = tape_.begin(); it != tape_.end();) {
     if (it->second != blank_ or head_ == it->first)
@@ -81,11 +81,15 @@ void Tape::cleanBothEnds() {
 }
 
 char Tape::GetCurSymbol() {
+  if (tape_.find(head_) == tape_.end())
+    return blank_;
   return tape_.at(head_);
 }
 
 void Tape::SetCurSymbol(char ch) {
-  tape_.at(head_) = ch;
+  if (tape_.find(head_) == tape_.end())
+    tape_.insert(make_pair(head_, ch));
+  else tape_.at(head_) = ch;
 }
 
 void Tape::MoveTheHead(char ch) {

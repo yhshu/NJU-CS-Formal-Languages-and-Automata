@@ -23,7 +23,7 @@ class Tape {
 
   string to_string(int num_tape);
 
-  void cleanBothEnds();
+  void CleanBothEnds();
 
   char GetCurSymbol();
 

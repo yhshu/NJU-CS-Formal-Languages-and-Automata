@@ -198,7 +198,7 @@ string TuringMachine::GetCurTMString() {
   stringstream ss;
   ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_;
   for (Tape &tape : tapes) {
-    ss << tape.to_string(0);
+    ss << tape.to_string(num_tape_);
   }
   ss << "State" << Space(NumLen(num_tape_ - 1)) << " : " << cur_state_;
   ss << "---------------------------------------------" << endl;
@@ -212,13 +212,18 @@ void TuringMachine::Run(const string &input) {
     if (verbose) {
       cout << GetCurTMString();
     }
+    else {
+      for(Tape &tape : tapes) {
+        tape.CleanBothEnds();
+      }
+    }
     Step();
   }
   // todo print the result
 }
 
 void TuringMachine::Step() {
-  for (const TransitionFunction& tf : transition_functions_) {
+  for (const TransitionFunction &tf : transition_functions_) {
     if (tf.GetInputState() == cur_state_ and tf.GetInputSymbols() == GetCurSymbols()) {
       SetSymbols(tf.GetOutputSymbols());
       MoveTheHead(tf.GetDirections());
