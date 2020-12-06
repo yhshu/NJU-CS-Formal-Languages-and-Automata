@@ -1,5 +1,5 @@
 //
-// Created by yhshu on 12/6/20.
+// Created by Yiheng Shu on 2020/12/6.
 //
 
 #include "Tape.h"
@@ -77,5 +77,21 @@ void Tape::cleanBothEnds() {
     if (it->second != blank_ or head_ == it->first)
       break;
     it = tape_.erase(it);
+  }
+}
+
+char Tape::GetCurSymbol() {
+  return tape_.at(head_);
+}
+
+void Tape::SetCurSymbol(char ch) {
+  tape_.at(head_) = ch;
+}
+
+void Tape::MoveTheHead(char ch) {
+  if (ch == 'l') {
+    head_--;
+  } else if (ch == 'r') {
+    head_++;
   }
 }

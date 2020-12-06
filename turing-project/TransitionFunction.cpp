@@ -35,3 +35,12 @@ bool TransitionFunction::operator==(const TransitionFunction &other) const {
       && input_state_ == other.input_state_
       && input_symbols_ == other.input_symbols_);
 }
+const vector<char> &TransitionFunction::GetOutputSymbols() const {
+  return output_symbols_;
+}
+const vector<char> &TransitionFunction::GetDirections() const {
+  return directions_;
+}
+const string &TransitionFunction::GetOutputState() const {
+  return output_state_;
+}

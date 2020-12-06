@@ -52,14 +52,19 @@ class TuringMachine {
    * Run the Turing Machine
    * @param input the input string
    */
-  void run(const string &input);
+  void Run(const string &input);
 
   void CheckInputSymbols(const string &input);
 
   void InitTapes(const string &input);
 
-  string getCurString();
+  string GetCurTMString();
+
   void Step();
+
+  vector<char> GetCurSymbols();
+  void SetSymbols(const vector<char> &output_symbols);
+  void MoveTheHead(const vector<char> &directions);
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_

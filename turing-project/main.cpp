@@ -42,6 +42,6 @@ int main(int argc, char *argv[]) {
     tm_str.push_back(line);
   }
   TuringMachine turing_machine(tm_str);
-  turing_machine.run(input);
+  turing_machine.Run(input);
   return 0;
 }

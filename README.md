@@ -22,7 +22,7 @@ yhshu@smail.nju.edu.cn
 
 ## 模拟器设计
 
-模拟器通过 `TuringMachine` 类的 `run` 函数实现。模拟器支持 `verbose` 模式，语法检查将判断输入串中的所有字符是否均属于输入符号集。
+模拟器通过 `TuringMachine` 类的 `Run` 函数实现。模拟器支持 `verbose` 模式，语法检查将判断输入串中的所有字符是否均属于输入符号集。
 
 
 ## 代码

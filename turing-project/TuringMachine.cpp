@@ -194,7 +194,7 @@ void TuringMachine::InitTapes(const string &input) {
   }
 }
 
-string TuringMachine::getCurString() {
+string TuringMachine::GetCurTMString() {
   stringstream ss;
   ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_;
   for (Tape &tape : tapes) {
@@ -205,17 +205,46 @@ string TuringMachine::getCurString() {
   return ss.str();
 }
 
-void TuringMachine::run(const string &input) {
+void TuringMachine::Run(const string &input) {
   CheckInputSymbols(input);
   InitTapes(input);
   while (final_state_set_.find(cur_state_) == final_state_set_.end()) {
     if (verbose) {
-      cout << getCurString();
-      Step();
+      cout << GetCurTMString();
+    }
+    Step();
+  }
+  // todo print the result
+}
+
+void TuringMachine::Step() {
+  for (const TransitionFunction& tf : transition_functions_) {
+    if (tf.GetInputState() == cur_state_ and tf.GetInputSymbols() == GetCurSymbols()) {
+      SetSymbols(tf.GetOutputSymbols());
+      MoveTheHead(tf.GetDirections());
+      cur_step_++;
+      cur_state_ = tf.GetOutputState();
+      break;
     }
   }
 }
 
-void TuringMachine::Step() {
+vector<char> TuringMachine::GetCurSymbols() {
+  vector<char> res;
+  for (Tape &tape : tapes) {
+    res.push_back(tape.GetCurSymbol());
+  }
+  return res;
+}
 
+void TuringMachine::SetSymbols(const vector<char> &output_symbols) {
+  for (int i = 0; i < num_tape_; i++) {
+    tapes.at(i).SetCurSymbol(output_symbols.at(i));
+  }
+}
+
+void TuringMachine::MoveTheHead(const vector<char> &directions) {
+  for (int i = 0; i < num_tape_; i++) {
+    tapes.at(i).MoveTheHead(directions.at(i));
+  }
 }

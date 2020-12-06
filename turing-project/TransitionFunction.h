@@ -31,6 +31,9 @@ class TransitionFunction {
   int GetNumTape() const;
   const string &GetInputState() const;
   const vector<char> &GetInputSymbols() const;
+  const vector<char> &GetOutputSymbols() const;
+  const vector<char> &GetDirections() const;
+  const string &GetOutputState() const;
 
   bool operator==(const TransitionFunction &other) const;
 
