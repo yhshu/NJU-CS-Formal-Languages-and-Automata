@@ -9,12 +9,12 @@
 
 using namespace std;
 
-void printERR();
+void PrintErr();
 
-void printEND();
+void PrintEnd();
 
-void printRUN();
+void PrintRun();
 
-void printDivider();
+void PrintDivider();
 
 #endif //TURING_MACHINE_TURING_PROJECT_MESSAGE_H_

@@ -24,7 +24,7 @@ Tape::Tape(int id, const string &input, char blank) {
   }
 }
 
-string Tape::ToString(int num_tape) {
+string Tape::GetVerboseStr(int num_tape) {
   CleanBothEnds(); // clean the blank symbols at both ends
 
   stringstream index_ss;
@@ -102,4 +102,13 @@ void Tape::MoveTheHead(char ch) {
   if (tape_.find(head_) == tape_.end()) {
     tape_.insert(make_pair(head_, blank_));
   }
+}
+
+string Tape::GetString() {
+  this->CleanBothEnds();
+  stringstream ss;
+  for (auto & it : tape_) {
+    ss << it.second;
+  }
+  return ss.str();
 }

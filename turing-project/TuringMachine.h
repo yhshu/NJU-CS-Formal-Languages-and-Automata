@@ -58,13 +58,14 @@ class TuringMachine {
 
   void InitTapes(const string &input);
 
-  string GetCurTMString();
+  string GetVerboseStr();
 
   void Step();
 
   vector<char> GetCurSymbols();
   void SetSymbols(const vector<char> &output_symbols);
   void MoveTheHead(const vector<char> &directions);
+  void PrintResult();
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_

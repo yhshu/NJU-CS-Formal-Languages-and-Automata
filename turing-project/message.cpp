@@ -4,15 +4,15 @@
 
 #include "message.h"
 
-void printERR() {
+void PrintErr() {
   cerr << "==================== ERR ====================" << endl;
 }
-void printEND() {
+void PrintEnd() {
   cerr << "==================== END ====================" << endl;
 }
-void printRUN() {
+void PrintRun() {
   cerr << "==================== RUN ====================" << endl;
 }
-void printDivider() {
+void PrintDivider() {
   cerr << "---------------------------------------------" << endl;
 }

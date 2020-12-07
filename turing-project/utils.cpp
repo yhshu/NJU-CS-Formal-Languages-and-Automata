@@ -20,7 +20,7 @@ void Help() {
 
 void SyntaxError(const string &error, const string &sentence, int error_pos) {
   if (GetVerbose()) {
-    printERR();
+    PrintErr();
     cerr << "error: " << error << endl;
     if (not sentence.empty())
       cerr << "Input: " << sentence << endl;
@@ -29,7 +29,7 @@ void SyntaxError(const string &error, const string &sentence, int error_pos) {
       for (int i = 0; i < error_pos; i++) { cerr << " "; }
       cerr << "^" << endl;
     }
-    printEND();
+    PrintEnd();
   } else { // not verbose mode
     cerr << "syntax error" << endl;
   }
@@ -39,7 +39,7 @@ void SyntaxError(const string &error, const string &sentence, int error_pos) {
 void IllegalInput(const string &input, int error_pos) {
   if (GetVerbose()) {
     cerr << "Input: " << input << endl;
-    printERR();
+    PrintErr();
 
     char illegal_char = input.at(error_pos);
     cerr << "\'" << illegal_char << "\' was not declared in the set of input symbols" << endl;
@@ -51,7 +51,7 @@ void IllegalInput(const string &input, int error_pos) {
       cerr << "^" << endl;
     }
 
-    printEND();
+    PrintEnd();
   } else { // not verbose mode
     cerr << "illegal input" << endl;
   }

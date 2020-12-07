@@ -58,6 +58,7 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
 
   CheckDefinition(); // check the TM definition
   cur_state_ = init_state_;
+  cur_step_ = 0;
 }
 
 void TuringMachine::BuildStateSet(const string &line) {
@@ -184,7 +185,7 @@ void TuringMachine::CheckInputSymbols(const string &input) {
   }
   // now the input is legal
   cerr << "Input: " << input << endl;
-  printRUN();
+  PrintRun();
 }
 
 void TuringMachine::InitTapes(const string &input) {
@@ -194,11 +195,11 @@ void TuringMachine::InitTapes(const string &input) {
   }
 }
 
-string TuringMachine::GetCurTMString() {
+string TuringMachine::GetVerboseStr() {
   stringstream ss;
   ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_ << endl;
   for (Tape &tape : tapes) {
-    ss << tape.ToString(num_tape_);
+    ss << tape.GetVerboseStr(num_tape_);
   }
   ss << "State" << Space(NumLen(num_tape_ - 1)) << " : " << cur_state_ << endl;
   ss << "---------------------------------------------" << endl;
@@ -210,7 +211,7 @@ void TuringMachine::Run(const string &input) {
   InitTapes(input);
   while (final_state_set_.find(cur_state_) == final_state_set_.end()) {
     if (GetVerbose()) {
-      cout << GetCurTMString();
+      cout << GetVerboseStr();
     } else {
       for (Tape &tape : tapes) {
         tape.CleanBothEnds();
@@ -219,9 +220,9 @@ void TuringMachine::Run(const string &input) {
     Step();
   }
   if (GetVerbose())
-    cout << GetCurTMString();
+    cout << GetVerboseStr();
 
-  // todo print the result
+  PrintResult();
 }
 
 void TuringMachine::Step() {
@@ -239,7 +240,6 @@ void TuringMachine::Step() {
   if (not move) {
     // no available transition function now, halt the TM, the input cannot be accepted
     // todo
-    cout << "false";
   }
 }
 
@@ -261,4 +261,9 @@ void TuringMachine::MoveTheHead(const vector<char> &directions) {
   for (int i = 0; i < num_tape_; i++) {
     tapes.at(i).MoveTheHead(directions.at(i));
   }
+}
+
+void TuringMachine::PrintResult() {
+  cerr << "Result: " << tapes.at(0).GetString() << endl;
+  PrintEnd();
 }
