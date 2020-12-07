@@ -60,12 +60,12 @@ class TuringMachine {
 
   string GetVerboseStr();
 
-  void Step();
+  bool Step();
 
   vector<char> GetCurSymbols();
   void SetSymbols(const vector<char> &output_symbols);
   void MoveTheHead(const vector<char> &directions);
-  void PrintResult();
+  void PrintFirstTapeResult();
 };
 
 #endif//TURING_MACHINE_TURING_PROJECT_TURINGMACHINE_H_

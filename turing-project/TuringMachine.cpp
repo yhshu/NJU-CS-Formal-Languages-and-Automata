@@ -209,6 +209,7 @@ string TuringMachine::GetVerboseStr() {
 void TuringMachine::Run(const string &input) {
   CheckInputSymbols(input);
   InitTapes(input);
+  bool accepted = true;
   while (final_state_set_.find(cur_state_) == final_state_set_.end()) {
     if (GetVerbose()) {
       cout << GetVerboseStr();
@@ -217,15 +218,18 @@ void TuringMachine::Run(const string &input) {
         tape.CleanBothEnds();
       }
     }
-    Step();
+    if (not Step()) {
+      accepted = false;
+      break;
+    }
   }
-  if (GetVerbose())
+  if (accepted and GetVerbose())
     cout << GetVerboseStr();
 
-  PrintResult();
+  PrintFirstTapeResult();
 }
 
-void TuringMachine::Step() {
+bool TuringMachine::Step() {
   bool move = false;
   for (const TransitionFunction &tf : transition_functions_) {
     if (tf.GetInputState() == cur_state_ and tf.GetInputSymbols() == GetCurSymbols()) {
@@ -238,9 +242,11 @@ void TuringMachine::Step() {
     }
   }
   if (not move) {
-    // no available transition function now, halt the TM, the input cannot be accepted
-    // todo
+//    // no available transition function now, halt the TM, the input cannot be accepted
+//    PrintResult();
+    return false;
   }
+  return true;
 }
 
 vector<char> TuringMachine::GetCurSymbols() {
@@ -263,7 +269,7 @@ void TuringMachine::MoveTheHead(const vector<char> &directions) {
   }
 }
 
-void TuringMachine::PrintResult() {
+void TuringMachine::PrintFirstTapeResult() {
   cerr << "Result: " << tapes.at(0).GetString() << endl;
   PrintEnd();
 }
