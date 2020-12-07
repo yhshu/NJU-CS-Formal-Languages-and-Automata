@@ -49,6 +49,10 @@ cmp aa __ rr cmp
 cmp bb __ rr cmp
 cmp ab __ rr reject
 cmp ba __ rr reject
+cmp _a __ *r reject
+cmp _b __ *r reject
+cmp a_ __ r* reject
+cmp b_ __ r* reject
 cmp __ __ ** accept
 
 ; State accept*: write 'true' on 1st tape
