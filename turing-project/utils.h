@@ -10,8 +10,7 @@
 
 using namespace std;
 
-static bool verbose = false;
-
+bool& GetVerbose();
 void SyntaxError(const string &error, const string &sentence, int error_pos);
 void IllegalInput(const string &input, int error_pos);
 void Help();

@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   for (int i = 1; i < argc; i++) {
     string arg = argv[i];
     if (arg == "-v" or arg == "--verbose") {
-      verbose = true;
+      GetVerbose() = true;
     } else if (arg == "-h" or arg == "--help") {
       Help();
     } else {

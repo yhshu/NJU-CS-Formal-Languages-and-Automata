@@ -19,7 +19,7 @@ void Help() {
 }
 
 void SyntaxError(const string &error, const string &sentence, int error_pos) {
-  if (verbose) {
+  if (GetVerbose()) {
     printERR();
     cerr << "error: " << error << endl;
     if (not sentence.empty())
@@ -37,7 +37,7 @@ void SyntaxError(const string &error, const string &sentence, int error_pos) {
 }
 
 void IllegalInput(const string &input, int error_pos) {
-  if (verbose) {
+  if (GetVerbose()) {
     cerr << "Input: " << input << endl;
     printERR();
 
@@ -82,4 +82,9 @@ string Space(int num_space) {
     ss << " ";
   }
   return ss.str();
+}
+
+bool &GetVerbose() {
+  static bool verbose;
+  return verbose;
 }

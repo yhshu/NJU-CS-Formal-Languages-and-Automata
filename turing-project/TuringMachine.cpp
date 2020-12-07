@@ -196,11 +196,11 @@ void TuringMachine::InitTapes(const string &input) {
 
 string TuringMachine::GetCurTMString() {
   stringstream ss;
-  ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_;
+  ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_ << endl;
   for (Tape &tape : tapes) {
-    ss << tape.to_string(num_tape_);
+    ss << tape.ToString(num_tape_);
   }
-  ss << "State" << Space(NumLen(num_tape_ - 1)) << " : " << cur_state_;
+  ss << "State" << Space(NumLen(num_tape_ - 1)) << " : " << cur_state_ << endl;
   ss << "---------------------------------------------" << endl;
   return ss.str();
 }
@@ -209,28 +209,37 @@ void TuringMachine::Run(const string &input) {
   CheckInputSymbols(input);
   InitTapes(input);
   while (final_state_set_.find(cur_state_) == final_state_set_.end()) {
-    if (verbose) {
+    if (GetVerbose()) {
       cout << GetCurTMString();
-    }
-    else {
-      for(Tape &tape : tapes) {
+    } else {
+      for (Tape &tape : tapes) {
         tape.CleanBothEnds();
       }
     }
     Step();
   }
+  if (GetVerbose())
+    cout << GetCurTMString();
+
   // todo print the result
 }
 
 void TuringMachine::Step() {
+  bool move = false;
   for (const TransitionFunction &tf : transition_functions_) {
     if (tf.GetInputState() == cur_state_ and tf.GetInputSymbols() == GetCurSymbols()) {
       SetSymbols(tf.GetOutputSymbols());
       MoveTheHead(tf.GetDirections());
       cur_step_++;
       cur_state_ = tf.GetOutputState();
+      move = true;
       break;
     }
+  }
+  if (not move) {
+    // no available transition function now, halt the TM, the input cannot be accepted
+    // todo
+    cout << "false";
   }
 }
 

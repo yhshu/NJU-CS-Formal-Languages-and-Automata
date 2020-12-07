@@ -24,7 +24,7 @@ Tape::Tape(int id, const string &input, char blank) {
   }
 }
 
-string Tape::to_string(int num_tape) {
+string Tape::ToString(int num_tape) {
   CleanBothEnds(); // clean the blank symbols at both ends
 
   stringstream index_ss;
@@ -39,7 +39,7 @@ string Tape::to_string(int num_tape) {
   for (auto &it : tape_) {
     auto index = abs(it.first);
     index_ss << " " << index;
-    pos_map.insert(make_pair(index, pos));
+    pos_map.insert(make_pair(it.first, pos));
     if (it.first == head_) {
       head_pos = pos;
     }
@@ -48,12 +48,14 @@ string Tape::to_string(int num_tape) {
 
   // tape symbol
   tape_ss << "Tape" << id_ << Space(NumLen(num_tape - 1) - NumLen(id_)) << "  : ";
-  vector<char> tape_str(pos_map.rbegin()->second + 1, ' ');
-  for (auto &it : pos_map) {
-    tape_str.at(it.second) = tape_.at(it.first);
-  }
-  for (auto &ch : tape_str) {
-    tape_ss << ch;
+  if (not pos_map.empty()) {
+    vector<char> tape_str(pos_map.rbegin()->second + 1, ' ');
+    for (auto &it : pos_map) {
+      tape_str.at(it.second) = tape_.at(it.first);
+    }
+    for (auto &ch : tape_str) {
+      tape_ss << ch;
+    }
   }
 
   // head
@@ -71,12 +73,10 @@ void Tape::CleanBothEnds() {
   }
 
   // the right end
-  auto it = tape_.end();
-  it--;
-  while (it != tape_.begin()) {
+  for (auto it = tape_.rbegin(); it != tape_.rend();) {
     if (it->second != blank_ or head_ == it->first)
       break;
-    it = tape_.erase(it);
+    tape_.erase((++it).base());
   }
 }
 
@@ -97,5 +97,9 @@ void Tape::MoveTheHead(char ch) {
     head_--;
   } else if (ch == 'r') {
     head_++;
+  }
+
+  if (tape_.find(head_) == tape_.end()) {
+    tape_.insert(make_pair(head_, blank_));
   }
 }
