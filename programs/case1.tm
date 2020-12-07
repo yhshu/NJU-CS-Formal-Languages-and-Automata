@@ -2,7 +2,7 @@
 ; Input: a string of a's and b's, e.g. 'abbabb'
 
 ; the finite set of states
-#Q = {s0,accept,accept2,accept3,accept4,halt_accept,reject,reject2,reject3,reject4,reject5,halt_reject}
+#Q = {s0,mv_a,mv_b,reset,cmp,accept,accept2,accept3,accept4,halt_accept,reject,reject2,reject3,reject4,reject5,halt_reject}
 
 ; the finite set of input symbols
 #S = {a,b}
@@ -25,23 +25,30 @@
 ; the transition functions
 
 ; State s0: start state
-s0 a_ a_ ** mv_a
-s0 b_ b_ ** reject
+s0 a_ a_ ** mv_a   ; start moving half of the string
+s0 b_ b_ ** reject ; the string starts with b, reject
 s0 __ __ ** reject ; the empty input should be rejected
 
 ; State mv_a: move a's in the beginning to the 2nd tape
 mv_a a_ _a rr mv_a
+mv_a __ __ *l reject ; there's no b
 mv_a b_ b_ ** mv_b
 
 ; State mv_b: move b's in the first half of the string to the 2nd tape
 mv_b b_ _b rr mv_b
-mv_b a_ __ rr reject
+mv_b a_ a_ *l reset
+mv_b __ __ *l reject ; there's no a after b
+
+; State reset: move the head of tape2 to the left end
+reset a_ a_ *r cmp
+reset aa aa *l reset
+reset ab ab *l reset
 
 ; State cmp: compare strings on two tapes
 cmp aa __ rr cmp
 cmp bb __ rr cmp
-cmp ab __ ** reject todo
-cmp ba __ ** reject todo
+cmp ab __ rr reject
+cmp ba __ rr reject
 cmp __ __ ** accept
 
 ; State accept*: write 'true' on 1st tape
@@ -51,7 +58,15 @@ accept3 __ u_ r* accept4
 accept4 __ e_ ** halt_accept
 
 ; State reject*: write 'false' on 1st tape
-reject __ f_ r* reject2 todo
+reject a_ __ r* reject
+reject b_ __ r* reject
+reject _a __ *r reject
+reject _b __ *r reject
+reject aa __ rr reject
+reject ab __ rr reject
+reject ba __ rr reject
+reject bb __ rr reject
+reject __ f_ r* reject2
 reject2 __ a_ r* reject3
 reject3 __ l_ r* reject4
 reject4 __ s_ r* reject5
