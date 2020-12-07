@@ -241,12 +241,7 @@ bool TuringMachine::Step() {
       break;
     }
   }
-  if (not move) {
-//    // no available transition function now, halt the TM, the input cannot be accepted
-//    PrintResult();
-    return false;
-  }
-  return true;
+  return move;
 }
 
 vector<char> TuringMachine::GetCurSymbols() {
