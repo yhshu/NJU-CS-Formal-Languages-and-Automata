@@ -2,7 +2,7 @@
 ; Input: a string of a's and b's, e.g., 'abbabb'
 
 ; the finite set of states
-#Q = {s0,mv_a,mv_b,reset,cmp,accept,accept2,accept3,accept4,halt_accept,reject,reject2,reject3,reject4,reject5,halt_reject}
+#Q = {s0,mv_a,mv_b,clean2_rej,reset,cmp,accept,accept2,accept3,accept4,halt_accept,reject,reject2,reject3,reject4,reject5,halt_reject}
 
 ; the finite set of input symbols
 #S = {a,b}
@@ -37,7 +37,18 @@ mv_a b_ b_ ** mv_b   ; start moving b
 ; State mv_b: move b's in the first half of the string to the 2nd tape
 mv_b b_ _b rr mv_b
 mv_b a_ a_ *l reset
-mv_b __ __ *l reject ; there's no a after b
+mv_b __ __ *l clean2_rej ; there's no a after b
+
+; State clean2_rej: clean the 2nd tape and reject
+clean2_rej a_ a_ ** reject
+clean2_rej b_ b_ ** reject
+clean2_rej aa a_ *l clean2_rej
+clean2_rej ba b_ *l clean2_rej
+clean2_rej ab a_ *l clean2_rej
+clean2_rej bb b_ *l clean2_rej
+clean2_rej _a __ *l clean2_rej
+clean2_rej _b __ *l clean2_rej
+clean2_rej __ __ ** reject
 
 ; State reset: move the head of tape2 to the left end
 reset a_ a_ *r cmp   ; start comparing the two strings
