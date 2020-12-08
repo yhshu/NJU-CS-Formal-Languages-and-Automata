@@ -47,7 +47,7 @@ reset ab ab *l reset
 ; State cmp: compare strings on two tapes
 cmp aa __ rr cmp
 cmp bb __ rr cmp
-cmp ab __ rr reject
+cmp ab __ rr reject ; the character is not the same, reject
 cmp ba __ rr reject
 cmp _a __ *r reject
 cmp _b __ *r reject

@@ -29,12 +29,12 @@ s0 x__ x__ *** reject ; the string starts with x
 s0 =__ =__ *** reject ; the string starts with =
 s0 1__ 1__ *** mv
 
-; State mv
+; State mv: move the first number to the 2nd tape
 mv 1__ _1_ rr* mv         ; continue moving
 mv x__ ___ r** product0   ; start product
 mv =__ =__ *** clean2_rej ; there's no 'x'
 
-; State clean2_rej
+; State clean2_rej: clean the 2nd tape and reject this input
 clean2_rej =1_ =__ *l* clean2_rej
 clean2_rej _1_ ___ *l* clean2_rej
 clean2_rej 11_ 1__ *l* clean2_rej
@@ -44,21 +44,21 @@ clean2_rej 1__ 1__ *** reject
 clean2_rej x__ x__ *** reject
 clean2_rej ___ ___ *** reject
 
-; State clean3_rej
+; State clean3_rej: clean the 3rd tape and reject this input
 clean3_rej __1 ___ **l clean3_rej
 clean3_rej ___ ___ *** reject
 
-; State product0
-product0 =__ ___ rl* clean2_rej
+; State product0: get the product of the two numbers in the input string
+product0 =__ ___ rl* clean2_rej ; if there's no second number in the string, reject
 product0 x__ x__ *** product0_
 product0 1__ 1__ *** product0_
 
-; State product0_
+; State product0_: there exists the second number in the input string, start product
 product0_ x__ ___ rl* product1
 product0_ 1__ 1__ *l* product1
 product0_ =__ ___ rll cmp
 
-; State product1: add several 1's to the 3rd tape
+; State product1: copy the 1's in the 2nd tape to the 3rd tape
 product1 ___ ___ *l* clean2_rej ; there is no '='
 product1 _1_ _1_ *** clean2_rej ; there is no '='
 product1 =__ =__ *l* clean2_rej ; there is no 1's after '='
@@ -70,7 +70,7 @@ product1 11_ 111 *lr product1
 product2 11_ 11_ *r* product2
 product2 1__ ___ r** product0_ ; arrived at the right end
 
-; State cmp
+; State cmp: compare the 3rd tape and the number after '='
 cmp ___ ___ *** accept
 cmp _1_ ___ *l* cmp
 cmp 11_ 1__ *l* cmp
