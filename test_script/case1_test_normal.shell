@@ -1,0 +1,13 @@
+./turing ../programs/case1.tm abbabb
+./turing ../programs/case1.tm aabaab
+./turing ../programs/case1.tm ab
+./turing ../programs/case1.tm abbabbb
+./turing ../programs/case1.tm aabbabb
+./turing ../programs/case1.tm babb
+./turing ../programs/case1.tm abba
+./turing ../programs/case1.tm abbab
+./turing ../programs/case1.tm a
+./turing ../programs/case1.tm b
+./turing ../programs/case1.tm baabaa
+./turing ../programs/case1.tm aabb
+./turing ../programs/case1.tm aacbb

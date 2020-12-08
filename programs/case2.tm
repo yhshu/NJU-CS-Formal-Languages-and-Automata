@@ -32,7 +32,8 @@ s0 1__ 1__ *** mv
 ; State mv: move the first number to the 2nd tape
 mv 1__ _1_ rr* mv         ; continue moving
 mv x__ ___ r** product0   ; start product
-mv =__ =__ *** clean2_rej ; there's no 'x'
+mv =__ =__ *l* clean2_rej ; there's no 'x'
+mv ___ ___ *l* clean2_rej ; there's only 1's
 
 ; State clean2_rej: clean the 2nd tape and reject this input
 clean2_rej =1_ =__ *l* clean2_rej

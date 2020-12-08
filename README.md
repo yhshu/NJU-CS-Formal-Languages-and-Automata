@@ -49,6 +49,7 @@ yhshu@smail.nju.edu.cn
 | 10       | b          | false    |
 | 11       | baabaa     | false    |
 | 12       | aabb       | false    |
+| 13       | aacbb      | illegal input|
 
 ### 程序 2
 
@@ -74,6 +75,8 @@ yhshu@smail.nju.edu.cn
 | 18       | =             | false    |
 | 19       | 1=1x1         | false    |
 | 20       | 11=111x111111 | false    |
+| 21       | 11            | false    |
+| 22       | 211x11=111    | illegal input|
 
 
 
