@@ -46,8 +46,9 @@ yhshu@smail.nju.edu.cn
 | 7        | abba       | false    |
 | 8        | abbab      | false    |
 | 9        | a          | false    |
-| 10       | baabaa     | false    |
-| 11       | aabb       | false    |
+| 10       | b          | false    |
+| 11       | baabaa     | false    |
+| 12       | aabb       | false    |
 
 ### 程序 2
 
