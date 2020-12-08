@@ -3,16 +3,25 @@
 //
 
 #include "message.h"
+#include "utils.h"
 
 void PrintErr() {
-  cerr << "==================== ERR ====================" << endl;
+  if (GetVerbose())
+    cerr << "==================== ERR ====================" << endl;
 }
 void PrintEnd() {
-  cerr << "==================== END ====================" << endl;
+  if (GetVerbose())
+    cerr << "==================== END ====================" << endl;
 }
 void PrintRun() {
-  cerr << "==================== RUN ====================" << endl;
+  if (GetVerbose())
+    cerr << "==================== RUN ====================" << endl;
 }
 void PrintDivider() {
-  cerr << "---------------------------------------------" << endl;
+  if (GetVerbose())
+    cerr << "---------------------------------------------" << endl;
+}
+void PrintInput(const string &input) {
+  if (GetVerbose())
+    cerr << "Input: " << input << endl;
 }

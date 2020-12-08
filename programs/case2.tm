@@ -76,7 +76,7 @@ cmp 1_1 ___ r*l cmp
 accept ___ t__ r** accept2
 accept2 ___ r__ r** accept3
 accept3 ___ u__ r** accept4
-accept4 __ e__ *** halt_accept
+accept4 ___ e__ *** halt_accept
 
 ; State reject*: write 'false' on 1st tape
 reject =__ ___ r** reject  ; clean the 1st tape

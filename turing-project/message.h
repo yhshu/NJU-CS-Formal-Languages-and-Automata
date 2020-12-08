@@ -17,4 +17,6 @@ void PrintRun();
 
 void PrintDivider();
 
+void PrintInput(const string &input);
+
 #endif //TURING_MACHINE_TURING_PROJECT_MESSAGE_H_

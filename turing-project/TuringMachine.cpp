@@ -188,7 +188,7 @@ void TuringMachine::CheckInputSymbols(const string &input) {
     }
   }
   // now the input is legal
-  cerr << "Input: " << input << endl;
+  PrintInput(input);
   PrintRun();
 }
 
@@ -269,6 +269,9 @@ void TuringMachine::MoveTheHead(const vector<char> &directions) {
 }
 
 void TuringMachine::PrintFirstTapeResult() {
-  cerr << "Result: " << tapes.at(0).GetString() << endl;
+  if (GetVerbose())
+    cerr << "Result: " << tapes.at(0).GetString() << endl;
+  else
+    cout << tapes.at(0).GetString() << endl;
   PrintEnd();
 }

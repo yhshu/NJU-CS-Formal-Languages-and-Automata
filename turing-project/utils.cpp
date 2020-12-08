@@ -53,7 +53,7 @@ void IllegalInput(const string &input, int error_pos) {
 
     PrintEnd();
   } else { // not verbose mode
-    cerr << "illegal input" << endl;
+    cout << "illegal input" << endl;
   }
   exit(1);
 }
