@@ -171,6 +171,10 @@ bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transiti
       return false;
   }
 
+  if (transition_func_vec.at(1).size() != num_tape_ or transition_func_vec.at(2).size() != num_tape_
+      or transition_func_vec.at(3).size() != num_tape_)
+    return false;
+
   if (state_set_.find(transition_func_vec.at(4)) == state_set_.end()) // the next state
     return false;
 
