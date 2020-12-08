@@ -201,7 +201,7 @@ void TuringMachine::InitTapes(const string &input) {
 
 string TuringMachine::GetVerboseStr() {
   stringstream ss;
-  ss << "Step " << Space(num_tape_ - 1) << " : " << cur_step_ << endl;
+  ss << "Step " << Space(NumLen(num_tape_ - 1)) << " : " << cur_step_ << endl;
   for (Tape &tape : tapes) {
     ss << tape.GetVerboseStr(num_tape_);
   }

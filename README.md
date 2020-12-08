@@ -6,16 +6,12 @@
 
 yhshu@smail.nju.edu.cn
 
-
-
 ## 构建，编译与运行
 
 - 集成开发环境 CLion
 - 构建工具 CMake 3.10 及以上版本，配置文件见 `CMakeList.txt`
 - 编译器 gcc 9
 - 操作系统支持 Ubuntu 20.04、macOS 11
-
-
 
 ## 解析器设计
 
@@ -26,20 +22,14 @@ yhshu@smail.nju.edu.cn
 - 判断图灵机程序所声明的纸带数是否是一个非零自然数；
 - 判断图灵机程序所声明的转移函数是否满足确定性图灵机的要求
 
-
-
 ## 模拟器设计
 
 模拟器通过 `TuringMachine` 类的 `Run` 函数实现。模拟器支持 `verbose` 模式，语法检查将判断输入串中的所有字符是否均属于输入符号集。
-
-
 
 ## 代码
 
 - `turing-project` 目录包含 C++ 源码
 - `programs` 目录包含图灵机程序代码
-
-
 
 ## 测试
 
@@ -59,8 +49,6 @@ yhshu@smail.nju.edu.cn
 | 10       | baabaa     | false    |
 | 11       | aabb       | false    |
 
-
-
 ### 程序 2
 
 | 用例编号 | 输入字符串    | 期望结果 |
@@ -74,11 +62,18 @@ yhshu@smail.nju.edu.cn
 | 7        | x=            | false    |
 | 8        | x=1           | false    |
 | 9        | 1x=           | false    |
-| 10       | 1x=1          | false    |
-| 11       | x1=           | false    |
-| 12       | 11x111=1111   | false    |
-| 13       | 11x11=111     | false    |
-| 14       | 11x11=11111   | false    |
+| 10       | x1=           | false    |
+| 11       | 11x111=1111   | false    |
+| 12       | 11x11=111     | false    |
+| 13       | 11x11=11111   | false    |
+| 14       | 1=1           | false    |
+| 15       | 1=11          | false    |
+| 16       | 11=1          | false    |
+| 17       | x             | false    |
+| 18       | =             | false    |
+| 19       | 1=1x1         | false    |
+| 20       | 11=111x111111 | false    |
+
 
 
 
