@@ -27,7 +27,7 @@
 ; State s0: start state
 s0 a_ a_ ** mv_a   ; start moving half of the string
 s0 b_ b_ ** reject ; the string starts with b, reject
-s0 __ __ ** reject ; the empty input should be rejected
+s0 __ __ ** reject ; the empty string
 
 ; State mv_a: move a's in the beginning to the 2nd tape
 mv_a a_ _a rr mv_a   ; continue moving a

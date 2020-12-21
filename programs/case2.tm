@@ -28,6 +28,7 @@
 s0 x__ x__ *** reject ; the string starts with x
 s0 =__ =__ *** reject ; the string starts with =
 s0 1__ 1__ *** mv
+s0 ___ ___ *** reject ; the empty string
 
 ; State mv: move the first number to the 2nd tape
 mv 1__ _1_ rr* mv         ; continue moving

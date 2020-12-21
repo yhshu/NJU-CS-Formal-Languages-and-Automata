@@ -32,18 +32,21 @@ int main(int argc, char *argv[]) {
 
   ifstream tm_file;
   tm_file.open(argv[argc - 2]);
-  string input = argv[argc - 1];
+  string tm_input = argv[argc - 1];
   if (!tm_file) {
     cerr << "error: the TM program path is not correct";
     exit(1);
   }
 
+  if (tm_input.size() >= 2 and tm_input[0] == '"' and tm_input[tm_input.size() - 1] == '"') {
+    tm_input = tm_input.substr(1, tm_input.size() - 2);
+  }
   string line;
   vector<string> tm_str;
   while (getline(tm_file, line)) {
     tm_str.push_back(line);
   }
   TuringMachine turing_machine(tm_str);
-  turing_machine.Run(input);
+  turing_machine.Run(tm_input);
   return 0;
 }
