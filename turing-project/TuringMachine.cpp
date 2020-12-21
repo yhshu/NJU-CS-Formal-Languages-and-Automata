@@ -109,7 +109,7 @@ void TuringMachine::BuildTapeSymbolsSet(const string &line) {
   auto tape_symbols_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &tape_symbol: tape_symbols_vec) {
     if (tape_symbol.size() != 1 or tape_symbol[0] == ';' or tape_symbol[0] == '*' or tape_symbol[0] == '{'
-        or tape_symbol[0] == '}' or or tape_symbol[0] == ' ')
+        or tape_symbol[0] == '}' or tape_symbol[0] == ' ')
       SyntaxError("illegal statements, the tape symbol should be a character", line, line.find_first_of(tape_symbol));
     this->tape_symbols_set_.insert(tape_symbol[0]);
   }
