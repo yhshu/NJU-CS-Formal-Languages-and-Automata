@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
       GetVerbose() = true;
     } else if (arg == "-h" or arg == "--help") {
       Help();
+      return 0;
     } else {
       arg_num++;
     }

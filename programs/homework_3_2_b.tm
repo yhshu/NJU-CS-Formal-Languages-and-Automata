@@ -1,14 +1,14 @@
-#Q = {q_1,q_rej,q_acc,q_a1,q_a2,q_2,q_b1,q_b2}
+#Q = {q_1,q_rej,q_rej1,q_acc,q_acc1,q_a1,q_a2,q_2,q_b1,q_b2}
 
 #S = {a,b}
 
-#G = {a,b,_}
+#G = {a,b,_,T,F}
 
 #q0 = q_1
 
 #B = _
 
-#F = {q_acc}
+#F = {q_acc1}
 
 #N = 1
 
@@ -35,3 +35,9 @@ q_b1 b b r q_b1
 q_b2 _ _ r q_b2
 q_b2 a _ l q_rej
 q_b2 b _ l q_2
+
+q_acc _ T r q_acc1
+
+q_rej _ F r q_rej1
+q_rej a _ l q_rej
+q_rej b _ l q_rej
