@@ -107,8 +107,9 @@ void Tape::MoveTheHead(char ch) {
 string Tape::GetString() {
   this->CleanBothEnds();
   stringstream ss;
-  for (auto & it : tape_) {
+  for (auto &it : tape_) {
     ss << it.second;
   }
-  return ss.str();
+  // remove the blank symbol in the string
+  return Trim(ss.str(), this->blank_);
 }

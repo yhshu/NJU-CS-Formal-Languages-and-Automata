@@ -6,12 +6,12 @@
 #include "message.h"
 #include <sstream>
 
-string Trim(const string &str) {
+string Trim(const string &str, const char &ch) {
   if (str.empty())
     return str;
   string res = str;
-  res.erase(0, res.find_first_not_of(' '));
-  res.erase(res.find_last_not_of(' ') + 1);
+  res.erase(0, res.find_first_not_of(ch));
+  res.erase(res.find_last_not_of(ch) + 1);
   return res;
 }
 void Help() {

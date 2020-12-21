@@ -13,7 +13,7 @@ TuringMachine::TuringMachine(const vector<string> &tm_str) {
   for (string line: tm_str) { // for each line
     auto comment_index = line.find(';');
     line = line.substr(0, comment_index);
-    line = Trim(line); // remove the space
+    line = Trim(line, ' '); // remove the space
     if (line.empty())  // empty line or just comment
       continue;
     if (line.size() <= 5) {
@@ -271,9 +271,10 @@ void TuringMachine::MoveTheHead(const vector<char> &directions) {
 }
 
 void TuringMachine::PrintFirstTapeResult() {
-  if (GetVerbose())
+  if (GetVerbose()) {
     cerr << "Result: " << tapes.at(0).GetString() << endl;
-  else
+  } else {
     cout << tapes.at(0).GetString() << endl;
+  }
   PrintEnd();
 }
