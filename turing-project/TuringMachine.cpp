@@ -10,11 +10,11 @@
 #include "message.h"
 
 TuringMachine::TuringMachine(const vector<string> &tm_str) {
-  for (string line: tm_str) {
-    auto commentIndex = line.find(';');
-    line = line.substr(0, commentIndex);
-    line = Trim(line);
-    if (line.empty())  // empty line or comment
+  for (string line: tm_str) { // for each line
+    auto comment_index = line.find(';');
+    line = line.substr(0, comment_index);
+    line = Trim(line); // remove the space
+    if (line.empty())  // empty line or just comment
       continue;
     if (line.size() <= 5) {
       SyntaxError("illegal statement, the sentence may be incomplete", line, -1);
@@ -89,7 +89,8 @@ void TuringMachine::BuildInputSymbolsSet(const string &line) {
 
   auto input_symbols_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &input_symbol: input_symbols_vec) {
-    if (input_symbol.size() != 1 or input_symbol[0] == ';' or input_symbol[0] == '*' or input_symbol[0] == '_')
+    if (input_symbol.size() != 1 or input_symbol[0] == ';' or input_symbol[0] == '*' or input_symbol[0] == '_'
+        or input_symbol[0] == '{' or input_symbol[0] == '}' or input_symbol[0] == ' ')
       SyntaxError("illegal statements, the input symbol should be a character", line, line.find_first_of(input_symbol));
     this->input_symbols_set_.insert(input_symbol[0]);
   }
@@ -107,7 +108,8 @@ void TuringMachine::BuildTapeSymbolsSet(const string &line) {
 
   auto tape_symbols_vec = Split(line.substr(6, line.size() - 7), ",");
   for (const string &tape_symbol: tape_symbols_vec) {
-    if (tape_symbol.size() != 1 or tape_symbol[0] == ';' or tape_symbol[0] == '*')
+    if (tape_symbol.size() != 1 or tape_symbol[0] == ';' or tape_symbol[0] == '*' or tape_symbol[0] == '{'
+        or tape_symbol[0] == '}' or or tape_symbol[0] == ' ')
       SyntaxError("illegal statements, the tape symbol should be a character", line, line.find_first_of(tape_symbol));
     this->tape_symbols_set_.insert(tape_symbol[0]);
   }
@@ -153,11 +155,11 @@ void TuringMachine::CheckDefinition() {
 bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transition_func_vec) {
   if (transition_func_vec.size() != 5)
     return false;
-  if (state_set_.find(transition_func_vec.at(0)) == state_set_.end()) // the current state
+  if (state_set_.find(transition_func_vec.at(0)) == state_set_.end()) // the input state is illegal
     return false;
 
   for (const char &ch : transition_func_vec.at(1)) { // symbols under read-write head
-    if (tape_symbols_set_.find(ch) == tape_symbols_set_.end())
+    if (tape_symbols_set_.find(ch) == tape_symbols_set_.end()) // the input symbol is illegal
       return false;
   }
 
@@ -166,13 +168,13 @@ bool TuringMachine::CheckTransitionFuncDefinition(const vector<string> &transiti
       return false;
   }
 
-  for (const char &ch : transition_func_vec.at(3)) {
+  for (const char &ch : transition_func_vec.at(3)) { // operation
     if (ch != 'r' and ch != 'l' and ch != '*')
       return false;
   }
 
   if (transition_func_vec.at(1).size() != num_tape_ or transition_func_vec.at(2).size() != num_tape_
-      or transition_func_vec.at(3).size() != num_tape_)
+      or transition_func_vec.at(3).size() != num_tape_) // the number of tapes
     return false;
 
   if (state_set_.find(transition_func_vec.at(4)) == state_set_.end()) // the next state
